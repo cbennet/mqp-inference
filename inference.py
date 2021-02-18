@@ -21,7 +21,18 @@ net.load_weights(weights_path)
 ln = net.getLayerNames()
 ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
-cap = cv2.VideoCapture(0)
+# wired webcam
+pic = cv2.VideoCapture(0)
+
+# ipcam
+pic = cv2.VideoCapture(<stream url>)
+
+# default image
+cap = pic
+
+# change resolution
+# cap = pic.set(3,680)
+# cap = pic.set(4,480)
 
 while True:
     _, image = cap.read()
