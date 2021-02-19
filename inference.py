@@ -25,7 +25,7 @@ ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 pic = cv2.VideoCapture(0)
 
 # ipcam
-pic = cv2.VideoCapture(<stream url>)
+# pic = cv2.VideoCapture(<stream url>)
 
 # default image
 cap = pic
@@ -86,8 +86,8 @@ while True:
     if len(idxs) > 0:
 
         # init loop vars
-        robot-index = 0
-        weapon-index = 0
+        robot_index = 0
+        weapon_index = 0
         detects = 0
         Weapon = True
         Robot = True
@@ -96,17 +96,17 @@ while True:
         for i in idxs.flatten():
 
             # sort detections
-            if labels[class_ids[i] == "mqpbot":
-                robot-index = i
-                if Robot:
-                    detects += 1
-                    Robot = False
+            # if labels[class_ids[i] == "mqpbot":
+            #     robot_index = i
+            #     if Robot:
+            #         detects += 1
+            #         Robot = False
 
-            if labels[class_ids[i] == "mqpweapon":
-                weapon-index = i
-                if Weapon:
-                    detects += 1
-                    Weapon = False
+            # if labels[class_ids[i] == "mqpweapon":
+            #     weapon_index = i
+            #     if Weapon:
+            #         detects += 1
+            #         Weapon = False
 
             # extract the bounding box coordinates
             x, y = boxes[i][0], boxes[i][1]
@@ -133,7 +133,7 @@ while True:
 
         # print heading if weapon and robot both detected
         if detects == 2:
-            print("Robot Heading: ", math.atan2(boxes[weapon-index][1] - boxes[robot-index][1], boxes[weapon-index][0] - boxes[robot-index][0]))
+            print("Robot Heading: ", math.atan2(boxes[weapon_index][1] - boxes[robot_index][1], boxes[weapon_index][0] - boxes[robot_index][0]))
 
     cv2.imshow("image", image)
     if ord("q") == cv2.waitKey(1):
