@@ -9,7 +9,7 @@ while(1):
 
     # top line is for webcam bottom is for static image
     #_, frame = cap.read()
-    frame = cv2.imread('./image-001.jpeg')
+    frame = cv2.imread('./stickers/image-001.jpeg')
     print(np.shape(frame))
     # Convert BGR to HSV
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
