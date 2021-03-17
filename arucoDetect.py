@@ -1,17 +1,19 @@
 import cv2
 import numpy as np
 import math
+distInch = 48/1133
 
 # uncomment below for live detection
 #cap = cv2.VideoCapture(0)
-
+idStore = {}
 while(1):
+
 
     # top line is for webcam bottom is for static image
     #_, frame = cap.read()
-    image = cv2.imread('./tags/WIN_20210316_15_57_57_Pro.jpg')
+    image = cv2.imread('./tags/OnFiled.png')
 
-    arucoDict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_1000)
+    arucoDict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
     arucoParams = cv2.aruco.DetectorParameters_create()
     (corners, ids, rejected) = cv2.aruco.detectMarkers(image, arucoDict, parameters=arucoParams)
 
@@ -41,14 +43,22 @@ while(1):
         cX = int((topLeft[0] + bottomRight[0]) / 2.0)
         cY = int((topLeft[1] + bottomRight[1]) / 2.0)
         cv2.circle(image, (cX, cY), 4, (0, 0, 255), -1)
+        heading = (-1 * math.atan2(topRight[1]-bottomRight[1], topRight[0]- bottomRight[0]))
+        idStore[markerID] = (cX, cY)
         # draw the ArUco marker ID on the image
         cv2.putText(image, str(markerID),
             (topLeft[0], topLeft[1] - 15), cv2.FONT_HERSHEY_SIMPLEX,
             0.5, (0, 255, 0), 2)
-        print("[INFO] ArUco marker ID: {}".format(markerID))
+        cv2.circle(image, (topLeft[0], topLeft[1]), radius = 5, color = (255,255,255), thickness = -1)
+        print("[INFO] ArUco marker ID: {}".format(markerID), "pos: (", cX, ",", cY, "), heading: ", heading)
         # show the output image
-        cv2.imshow('image', image)
-        #cv2.imwrite("output.jpg", image)
-        cv2.waitKey(0)
+
+    angleToTarget = -1 * math.atan2(idStore[62][1] - idStore[203][1], idStore[62][0] - idStore[203][0])
+    distToTarget = distInch * math.sqrt((idStore[203][1] - idStore[62][1]) ** 2 +  (idStore[203][0] - idStore[62][0]) ** 2)
+    print("targetHead: ", angleToTarget, "targetDist: ", distToTarget)
+
+    cv2.imshow('image', image)
+    cv2.imwrite("output.jpg", image)
+    cv2.waitKey(10)
 
 cv2.destroyAllWindows()
