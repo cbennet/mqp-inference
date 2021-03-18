@@ -53,7 +53,7 @@ while(1):
         print("[INFO] ArUco marker ID: {}".format(markerID), "pos: (", cX, ",", cY, "), heading: ", heading)
         # show the output image
 
-    angleToTarget = -1 * math.atan2(idStore[62][1] - idStore[203][1], idStore[62][0] - idStore[203][0])
+    angleToTarget = math.degrees(-1 * math.atan2(idStore[62][1] - idStore[203][1], idStore[62][0] - idStore[203][0]))
     distToTarget = distInch * math.sqrt((idStore[203][1] - idStore[62][1]) ** 2 +  (idStore[203][0] - idStore[62][0]) ** 2)
     print("targetHead: ", angleToTarget, "targetDist: ", distToTarget)
 
