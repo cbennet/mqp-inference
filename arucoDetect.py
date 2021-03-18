@@ -43,7 +43,7 @@ while(1):
         cX = int((topLeft[0] + bottomRight[0]) / 2.0)
         cY = int((topLeft[1] + bottomRight[1]) / 2.0)
         cv2.circle(image, (cX, cY), 4, (0, 0, 255), -1)
-        heading = (-1 * math.atan2(topRight[1]-bottomRight[1], topRight[0]- bottomRight[0]))
+        heading = math.degrees(-1 * math.atan2(topRight[1]-bottomRight[1], topRight[0]- bottomRight[0]))
         idStore[markerID] = (cX, cY)
         # draw the ArUco marker ID on the image
         cv2.putText(image, str(markerID),
