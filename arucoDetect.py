@@ -44,7 +44,7 @@ while(1):
         cY = int((topLeft[1] + bottomRight[1]) / 2.0)
         cv2.circle(image, (cX, cY), 4, (0, 0, 255), -1)
         heading = math.degrees(-1 * math.atan2(topRight[1]-bottomRight[1], topRight[0]- bottomRight[0]))
-        idStore[markerID] = (cX, cY)
+        idStore[markerID] = (cX, cY, heading)
         # draw the ArUco marker ID on the image
         cv2.putText(image, str(markerID),
             (topLeft[0], topLeft[1] - 15), cv2.FONT_HERSHEY_SIMPLEX,
@@ -53,6 +53,10 @@ while(1):
         print("[INFO] ArUco marker ID: {}".format(markerID), "pos: (", cX, ",", cY, "), heading: ", heading)
         # show the output image
 
+    ourHeading = idStore[203][2]
+    ourPos = (idStore[203][0], idStore[203][1])
+    theirHeading = idStore[62][2]
+    theirPos = (idStore[203][0], idStore[203][1])
     angleToTarget = math.degrees(-1 * math.atan2(idStore[62][1] - idStore[203][1], idStore[62][0] - idStore[203][0]))
     distToTarget = distInch * math.sqrt((idStore[203][1] - idStore[62][1]) ** 2 +  (idStore[203][0] - idStore[62][0]) ** 2)
     print("targetHead: ", angleToTarget, "targetDist: ", distToTarget)
